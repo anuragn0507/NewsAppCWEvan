@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 
@@ -13,7 +14,7 @@ import com.example.newsappcwevan.Models.NewsHeadlines;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SelectListener{
     RecyclerView recyclerView;
     CustomAdapter adapter;
     ProgressDialog dialog;
@@ -50,8 +51,16 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_main);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(this,1));
-        adapter = new CustomAdapter(this, list);
+        adapter = new CustomAdapter(this, list, this);
         recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void OnNewsClicked(NewsHeadlines headlines) {
+        startActivity(new Intent(MainActivity.this, DetailsActivity.class)
+        .putExtra("data",headlines));
+
 
     }
 }
